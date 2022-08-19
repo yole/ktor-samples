@@ -19,7 +19,8 @@ class HttpBinResponse(
     var gzipped: Boolean? = null,
     var deflated: Boolean? = null,
     var method: String? = null,
-    var cookies: Map<String, String>? = null
+    var cookies: Map<String, String>? = null,
+    var uuid: String? = null
 )
 
 fun HttpBinResponse.clear() {

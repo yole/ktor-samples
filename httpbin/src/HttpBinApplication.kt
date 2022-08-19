@@ -1,15 +1,16 @@
 package io.ktor.samples.httpbin
 
-import com.google.gson.*
-import com.google.gson.reflect.*
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import io.ktor.content.TextContent
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.serialization.gson.*
-import io.ktor.server.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.html.*
+import io.ktor.server.http.content.*
 import io.ktor.server.plugins.*
 import io.ktor.server.plugins.autohead.*
 import io.ktor.server.plugins.callloging.*
@@ -25,9 +26,10 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.util.*
 import io.ktor.util.logging.*
-import kotlinx.coroutines.*
-import java.io.*
-import java.time.*
+import kotlinx.coroutines.delay
+import java.io.File
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.util.*
 
 /**
@@ -393,6 +395,12 @@ fun Application.main() {
             val r = Random()
             val buffer = ByteArray(n) { r.nextInt().toByte() }
             call.respond(buffer)
+        }
+
+        get("/uuid") {
+            call.sendHttpBinResponse() {
+                uuid = UUID.randomUUID().toString()
+            }
         }
 
         // A static route where the 'static' folder is the base.
